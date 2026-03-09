@@ -55,13 +55,16 @@ test:
 		$(MAKE) load
 	$(MAKE) clean
 
-remove: clean
+remove: clean ensure-exec
 	./uninstall.sh
 
-install: clean
+ensure-exec:
+	@chmod +x install.sh uninstall.sh install/firmware.sh scripts/gen-autoconf.sh
+
+install: clean ensure-exec
 	./install.sh
 	./install/firmware.sh --skip-disclaimer
 
-install-debug: clean
+install-debug: clean ensure-exec
 	./install.sh --debug
 	./install/firmware.sh --skip-disclaimer
