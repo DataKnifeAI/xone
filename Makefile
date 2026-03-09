@@ -1,5 +1,8 @@
-KVERSION := $(shell uname -r)
-KDIR := /lib/modules/${KVERSION}/build
+.DEFAULT_GOAL := default
+
+# KVER from DKMS (${kernelver}); fallback to running kernel for local builds
+KVERSION := $(or $(KVER),$(shell uname -r))
+KDIR := /lib/modules/$(KVERSION)/build
 MAKEFLAGS+="-j $(shell nproc)"
 
 # Use same compiler as the running kernel to avoid flag mismatches (e.g. clang-only flags with gcc).
